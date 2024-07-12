@@ -7,8 +7,7 @@ class UserController{
     createUser = async(req, res) => {
         try {
             const data = req.body;
-            console.log(this);
-            // const user = await this.userController.createUser(data);
+            const user = await this.userController.createUser(data);
             return res.status(SuccessCodes.CREATED).json({
                 data: user,
                 success: true,
@@ -20,7 +19,8 @@ class UserController{
             return res.status(ServerErrorCodes.INTERNAL_SERVER_ERROR).json({
                 data: {},
                 success: false,
-                message: 'Not able to crete an user'
+                message: 'Not able to crete an user',
+                err: error
             })
         }
     }
