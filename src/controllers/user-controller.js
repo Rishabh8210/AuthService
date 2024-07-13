@@ -45,6 +45,26 @@ class UserController{
             })
         }
     }
+    isAuthenticated = async (req, res) => {
+        try {
+            const token = req.headers['x-access-token'];
+            const response = await this.userController.isAuthenticated(token);
+            return res.status(SuccessCodes.OK).json({
+                data: response,
+                success: true,
+                message: 'token is valid',
+                err: {}
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(ServerErrorCodes.INTERNAL_SERVER_ERROR).json({
+                data: {},
+                success: false,
+                message: 'token is invalid',
+                err: error
+            })
+        }
+    }
 }
 
 module.exports = UserController

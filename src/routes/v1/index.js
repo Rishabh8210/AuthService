@@ -5,4 +5,5 @@ const { AuthMiddlewareValidator } = require('../../middlewares/index');
 const User = new UserController();
 router.post('/signup', AuthMiddlewareValidator.validateUserAuth, User.createUser);
 router.post('/signin', AuthMiddlewareValidator.validateUserAuth,  User.signin);
+router.get('/isAuthenticated', User.isAuthenticated)
 module.exports = router
