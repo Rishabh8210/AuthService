@@ -11,7 +11,7 @@ function createAndStartServer(){
 
     app.use('/api', ApiRoutes);
 
-    app.listen(PORT, () => {
+    app.listen(PORT, async() => {
         console.log(`Server is running at PORT ${PORT}`)
     })
 }

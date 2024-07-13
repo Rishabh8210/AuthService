@@ -1,5 +1,5 @@
 const { UserService } = require('../services/index');
-const {ServerErrorCodes, SuccessCodes} = require('../utils/error-codes')
+const {ServerErrorCodes, SuccessCodes, ClientErrorsCodes} = require('../utils/error-codes')
 class UserController{
     constructor(){
         this.userController = new UserService();
@@ -20,6 +20,27 @@ class UserController{
                 data: {},
                 success: false,
                 message: 'Not able to crete an user',
+                err: error
+            })
+        }
+    }
+    signin = async(req, res) => {
+        try {
+            const { email, password } = req.body;
+            const user = await this.userController.getUserByEmail(email);
+            const token = await this.userController.signIn(email, password);
+            return res.status(SuccessCodes.OK).json({
+                data: user,
+                success: true,
+                message: 'Successfully signed in',
+                err: {},
+                token: token
+            })
+        } catch (error) {
+            return res.status(ClientErrorsCodes.BAD_REQUEST).json({
+                data: {},
+                success: false,
+                message: 'User credential not match, signin fail',
                 err: error
             })
         }

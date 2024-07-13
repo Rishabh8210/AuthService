@@ -85,6 +85,21 @@ class UserService{
             throw {error}
         }
     }
+
+    async signIn(email, password){ // user = {email: 'xyz@abc.com', password: 'abc123@'}
+        try {
+             const isUserExist = await this.userService.getUserByEmail(email);
+            const validatePassword = this.checkPassword(password, isUserExist.password);
+            if(!validatePassword){
+                throw {error: 'Password not match'}
+            }
+            const token = this.createToken({email, id: isUserExist.id});
+            return token;
+        } catch (error) {
+            console.log("Something went wrong inside the signin method");
+            throw {error}
+        }
+    }
 }
 
 module.exports = UserService
