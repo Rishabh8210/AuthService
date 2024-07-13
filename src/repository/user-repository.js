@@ -34,10 +34,23 @@ class UserRepository{
             throw {error}
         }
     }
-    async getUser(){
+    async getUser(id){
         try {
             const user = await User.findByPk(id);
             return user;
+        } catch (error) {
+            console.log("Something went wrong inside Repository layer");
+            throw {error}
+        }
+    }
+    async getUserByEmail(email){
+        try {
+            const user = await User.findOne({
+                where: {
+                    email: email
+                }
+            })
+            return user
         } catch (error) {
             console.log("Something went wrong inside Repository layer");
             throw {error}
