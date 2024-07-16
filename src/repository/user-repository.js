@@ -1,5 +1,5 @@
 const { User, Role } = require('../models/index');
-
+const AppErrors = require('../utils/error-handler')
 class UserRepository{
     async createUser(data){
         try{

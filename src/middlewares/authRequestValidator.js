@@ -9,6 +9,9 @@ const validateUserAuth = (req, res, next) => {
     }
     next();
 }
+const isAuthenticated = (req, res, next) => {
+    
+}
 
 module.exports = {
     validateUserAuth
