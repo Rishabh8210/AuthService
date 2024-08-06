@@ -6,3 +6,9 @@
 - Create a `.env` file in the root diretory and add the following environment variables.
     - `PORT = 3000`
 - Inside the `src/config` folder create a new file `config.json` and then add the following piece of json
+
+- Environmen Variables
+    - `PORT = 3000`
+    - `JWT_SECRET_KEY = {"YOUR_SECRET_KEY"}`
+    - `DB_SYNC = "true"`
+    - `user = "<sender mail address>"`
