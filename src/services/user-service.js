@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 const { JWT_SECRET_KEY } = require('../config/serverConfig')
 const { UserRepository } = require('../repository/index');
 const bcrypt = require('bcrypt');
+const sendVerificationMail = require('./mail-service')
 class UserService{
     constructor(){
         this.userService = new UserRepository();
@@ -9,6 +10,7 @@ class UserService{
     async createUser(data){
         try {
             const user = await this.userService.createUser(data);
+            sendVerificationMail(data.email)
             return user;
         } catch (error) {
             console.log("Something went wrong inside Service layer");
