@@ -1,5 +1,5 @@
 const { UserService } = require('../services/index');
-const {ServerErrorCodes, SuccessCodes, ClientErrorsCodes} = require('../utils/error-codes')
+const { StatusCodes } = require('http-status-codes')
 class UserController{
     constructor(){
         this.userController = new UserService();
@@ -8,7 +8,7 @@ class UserController{
         try {
             const data = req.body;
             const user = await this.userController.createUser(data);
-            return res.status(SuccessCodes.CREATED).json({
+            return res.status(StatusCodes.CREATED).json({
                 data: user,
                 success: true,
                 message: 'Successfully create an user',
@@ -16,7 +16,7 @@ class UserController{
             })
         } catch (error) {
             console.log(error);
-            return res.status(ServerErrorCodes.INTERNAL_SERVER_ERROR).json({
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 data: {},
                 success: false,
                 message: 'Not able to crete an user',
@@ -37,7 +37,7 @@ class UserController{
                 token: token
             })
         } catch (error) {
-            return res.status(ClientErrorsCodes.BAD_REQUEST).json({
+            return res.status(StatusCodes.BAD_REQUEST).json({
                 data: {},
                 success: false,
                 message: 'User credential not match, signin fail',
@@ -49,7 +49,7 @@ class UserController{
         try {
             const token = req.headers['x-access-token'];
             const response = await this.userController.isAuthenticated(token);
-            return res.status(SuccessCodes.OK).json({
+            return res.status(StatusCodes.OK).json({
                 data: response,
                 success: true,
                 message: 'token is valid',
