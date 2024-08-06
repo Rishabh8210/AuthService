@@ -16,11 +16,11 @@ class UserController{
             })
         } catch (error) {
             console.log(error);
-            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            return res.status(error.statusCode).json({
                 data: {},
                 success: false,
-                message: 'Not able to crete an user',
-                err: error
+                message: error.message,
+                err: error.explanation
             })
         }
     }
@@ -37,11 +37,11 @@ class UserController{
                 token: token
             })
         } catch (error) {
-            return res.status(StatusCodes.BAD_REQUEST).json({
+            return res.status(error.statusCode).json({
                 data: {},
                 success: false,
-                message: 'User credential not match, signin fail',
-                err: error
+                message: error.message,
+                err: error.explanation
             })
         }
     }

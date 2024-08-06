@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken')
 const { JWT_SECRET_KEY } = require('../config/serverConfig')
 const { UserRepository } = require('../repository/index');
 const bcrypt = require('bcrypt');
-const sendVerificationMail = require('./mail-service')
+const sendVerificationMail = require('./mail-service');
+const AppError = require('../utils/error-handler');
 class UserService{
     constructor(){
         this.userService = new UserRepository();
@@ -13,8 +14,16 @@ class UserService{
             sendVerificationMail(data.email)
             return user;
         } catch (error) {
+            if(error.name = 'SequelizeValidationError'){
+                throw error
+            }
             console.log("Something went wrong inside Service layer");
-            throw {error}
+            throw new AppError(
+                'ServerError',
+                'Something went wrong in the service',
+                'Logical issue found',
+                500
+            )
         }
     }
 
@@ -98,6 +107,9 @@ class UserService{
             const token = this.createToken({email, id: isUserExist.id});
             return token;
         } catch (error) {
+            if(error.name = 'AttributeNotFound'){
+                throw error
+            }
             console.log("Something went wrong inside the signin method");
             throw {error}
         }
