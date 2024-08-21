@@ -12,7 +12,8 @@ function createAndStartServer(){
     app.use(bodyParser.urlencoded({extended: true}));
 
     app.use('/api', ApiRoutes);
-    app.get('/verify', (req, res) => {
+    app.get('/verify', async (req, res) => {
+        // we can update user verify attribute from here 
         res.status(200).json("Verification successfully, you're shortly redirected to home page")
     })
     app.listen(PORT, async() => {

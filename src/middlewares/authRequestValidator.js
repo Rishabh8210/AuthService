@@ -1,5 +1,5 @@
 const validateUserAuth = (req, res, next) => {
-    if(!req.body.email || !req.body.password){
+    if(!req.body.email || !req.body.password || !req.body.name || !req.body.age || !req.body.gender || !req.body.phone){
         return res.status(400).json({
             data: {},
             success: false,

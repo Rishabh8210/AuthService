@@ -33,7 +33,24 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [6, 30]
       }
-    }
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    age: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'User',

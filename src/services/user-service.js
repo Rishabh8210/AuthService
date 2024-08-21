@@ -14,7 +14,7 @@ class UserService{
             sendVerificationMail(data.email)
             return user;
         } catch (error) {
-            console.log(error.name)
+            console.log(error)
             if(error.name == 'SequelizeValidationError'){
                 throw error
             }
