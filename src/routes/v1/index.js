@@ -6,4 +6,5 @@ const User = new UserController();
 router.post('/signup', AuthMiddlewareValidator.validateUserAuth, User.createUser);
 router.post('/signin', AuthMiddlewareValidator.validateUserAuth,  User.signin);
 router.get('/isAuthenticated', User.isAuthenticated)
+router.get('/users/:id', User.getUserById);
 module.exports = router

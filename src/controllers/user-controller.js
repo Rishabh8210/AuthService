@@ -29,7 +29,7 @@ class UserController{
             const { email, password } = req.body;
             const user = await this.userController.getUserByEmail(email);
             const token = await this.userController.signIn(email, password);
-            return res.status(SuccessCodes.OK).json({
+            return res.status(StatusCodes.OK).json({
                 data: user,
                 success: true,
                 message: 'Successfully signed in',
@@ -38,6 +38,27 @@ class UserController{
             })
         } catch (error) {
             return res.status(error.statusCode).json({
+                data: {},
+                success: false,
+                message: error.message,
+                err: error.explanation
+            })
+        }
+    }
+    getUserById = async(req, res) => {
+        try {
+            const { id } = req.params;
+            console.log(id)
+            const user = await this.userController.getUser(id);
+            return res.status(StatusCodes.OK).json({
+                data: user,
+                success: true,
+                message: 'Successfully signed in',
+                err: {},
+            })
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({
                 data: {},
                 success: false,
                 message: error.message,
