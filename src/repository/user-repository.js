@@ -68,7 +68,7 @@ class UserRepository{
             return user
         } catch (error) {
             console.log("Something went wrong inside Repository layer");
-            throw {error}
+            throw error
         }
     }
     async getMultiplUsers(){

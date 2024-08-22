@@ -4,6 +4,8 @@ const { UserRepository } = require('../repository/index');
 const bcrypt = require('bcrypt');
 const sendVerificationMail = require('./mail-service');
 const AppError = require('../utils/error-handler');
+const ClientError = require('../utils/client-error');
+const { StatusCodes } = require('http-status-codes')
 class UserService{
     constructor(){
         this.userService = new UserRepository();
@@ -64,7 +66,7 @@ class UserService{
             return user;
         } catch (error) {
             console.log("Something went wrong inside Service layer");
-            throw {error}
+            throw error
         }
     }
 
@@ -100,10 +102,15 @@ class UserService{
 
     async signIn(email, password){ // user = {email: 'xyz@abc.com', password: 'abc123@'}
         try {
-             const isUserExist = await this.userService.getUserByEmail(email);
+            const isUserExist = await this.userService.getUserByEmail(email);
             const validatePassword = this.checkPassword(password, isUserExist.password);
             if(!validatePassword){
-                throw {error: 'Password not match'}
+                throw new ClientError(
+                    'AttributeNotFound',
+                    'Invalid password send in the request',
+                    'Please check the password, as there is no record of the email',
+                    StatusCodes.NOT_FOUND
+                )
             }
             const token = this.createToken({email, id: isUserExist.id});
             return token;
@@ -112,7 +119,7 @@ class UserService{
                 throw error
             }
             console.log("Something went wrong inside the signin method");
-            throw {error}
+            throw error
         }
     }
 

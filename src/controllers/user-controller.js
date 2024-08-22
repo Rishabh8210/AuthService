@@ -27,6 +27,7 @@ class UserController{
     signin = async(req, res) => {
         try {
             const { email, password } = req.body;
+            // console.log(email, password)
             const user = await this.userController.getUserByEmail(email);
             const token = await this.userController.signIn(email, password);
             return res.status(StatusCodes.OK).json({
@@ -69,6 +70,7 @@ class UserController{
     isAuthenticated = async (req, res) => {
         try {
             const token = req.headers['x-access-token'];
+            console.log(token)
             const response = await this.userController.isAuthenticated(token);
             return res.status(StatusCodes.OK).json({
                 data: response,
@@ -78,7 +80,7 @@ class UserController{
             });
         } catch (error) {
             console.log(error);
-            return res.status(ServerErrorCodes.INTERNAL_SERVER_ERROR).json({
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 data: {},
                 success: false,
                 message: 'token is invalid',
